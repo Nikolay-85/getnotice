@@ -1,0 +1,19 @@
+{
+  "name": "getnotice",
+  "version": "0.0.1",
+  "moduleType": [
+    "amd"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "static/js",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "sockjs": "~0.3.4"
+  }
+}
