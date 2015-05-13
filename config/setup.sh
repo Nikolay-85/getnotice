@@ -31,6 +31,7 @@ apt-get install -y libjpeg-dev libtiff-dev zlib1g-dev libfreetype6-dev liblcms2-
 apt-get -y install nodejs
 apt-get -y install npm
 apt-get -y install libmysqlclient-dev
+apt-get -y install rabbitmq-server
 
 echo -e "\n--- Install MySQL specific packages and settings ---\n"
 echo "mysql-server mysql-server/root_password password $DBPASSWD" | debconf-set-selections
