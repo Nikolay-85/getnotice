@@ -67,3 +67,7 @@ chmod a+x $PROJECT_DIR/manage.py
 # Django project setup
 su - vagrant -c "source $VIRTUALENV_DIR/bin/activate && cd $PROJECT_DIR && ./manage.py syncdb --noinput && ./manage.py migrate"
 
+# Rabbitmq related
+rabbitmqctl add_vhost gn
+rabbitmqctl add_user gn gn
+rabbitmqctl set_permissions -p gn gn ".*" ".*" ".*"

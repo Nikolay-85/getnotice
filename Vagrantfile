@@ -6,8 +6,8 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provider "virtualbox" do |v|
-    v.memory = 512
-    v.cpus = 1
+    v.memory = 1024
+    v.cpus = 2
   end
 
   config.vm.box = "debian/jessie64"
@@ -17,6 +17,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network "private_network", ip: "192.168.150.150"
   config.vm.synced_folder ".", "/home/vagrant/getnotice"
   config.vm.network "forwarded_port", guest: 8000, host: 8080
+  #config.vm.provider :virtualbox do |vb|
+  #  vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+  #  vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+  #end
   #config.vm.synced_folder ".", "/app"
   #config.vm.share_folder "project", "/home/vagrant/getnotice", "."	
   #config.vm.provision "docker"
