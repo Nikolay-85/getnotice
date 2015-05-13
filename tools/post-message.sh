@@ -1,7 +1,13 @@
 #!/bin/bash
+# Utility to send messages to our great messaging system
+
+HOST="localhost"
+PORT="8080"
+
 while [[ $# > 1 ]]
 do
 key="$1"
+
 
 case $key in
     -m|--message)

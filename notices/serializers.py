@@ -12,6 +12,9 @@ class MessageSerializer(serializers.Serializer):
         """
         Create and return a new `Snippet` instance, given the validated data.
         """
-        return True
+        return {
+            "text": validated_data["text"],
+            "level": validated_data["level"]
+        }
         return Message.objects.create(**validated_data)
 

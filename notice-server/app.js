@@ -1,24 +1,22 @@
-var amqp = require('amqp');
+var q = 'gnq';
 
-var connection = amqp.createConnection({
-    host: 'localhost',
-    vhost: 'gn',
-    login: 'gn',
-    password: 'gn'});
+var open = require('amqplib').connect('amqp://guest:guest@localhost');
 
-// Wait for connection to become established.
-console.log('connecting');
-connection.on('ready', function () {
-  // Use the default 'amq.topic' exchange
-  connection.queue('my-queue', function (q) {
-        console.log('ready');
-      // Catch all messages
-      q.bind('#');
-
-      // Receive messages
-      q.subscribe(function (message) {
-        // Print messages to stdout
-        console.log(message);
-      });
+// Consumer
+open.then(function(conn) {
+  console.log('opened')
+  var ok = conn.createChannel();
+  console.log('ok', ok)
+  ok = ok.then(function(ch) {
+    console.log('ok ok ')
+    ch.assertQueue(q, {durable: false});
+    ch.consume(q, function(msg) {
+      console.log('consumed')
+      if (msg !== null) {
+        console.log(msg.content.toString());
+        ch.ack(msg);
+      }
+    });
   });
-});
+  return ok;
+}).then(null, console.warn);
