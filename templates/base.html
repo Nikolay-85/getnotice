@@ -1,3 +1,4 @@
+{% load templatetag_handlebars i18n %}
 <!doctype html>
 
 <html lang="en">
@@ -16,7 +17,45 @@
 </head>
 
 <body>
-  {% block content %}{% endblock %}
-  <script src="{{ STATIC_URL }}/js/sockjs/sockjs.min.js"></script>
+
+    {% block content %}{% endblock %}
+    
+    {% tplhandlebars "tpl-infos" %}
+      {{total}} {% trans "result(s)." %}
+      <p>{% trans "Min" %}: {{min}}</p>
+      <p>{% trans "Max" %}: {{max}}</p>
+    {% endtplhandlebars %}
+
+    <script src="{{ STATIC_URL }}/libs/sockjs/sockjs.min.js"></script>
+    <script src="{{ STATIC_URL }}/libs/jquery/dist/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}/libs/ember/ember.min.js"></script>
+    <script src="{{ STATIC_URL }}/libs/loader.js/loader.js"></script>
+    <script src="{{ STATIC_URL }}/app/app.js"></script>
+    
+    <script>
+        var newConnection = function(){
+            var sock = new SockJS('http://localhost:9999/echo');
+
+            sock.onopen = function() {
+               console.log('open');
+            };
+            sock.onmessage = function(e) {
+
+                console.log('message', e.data);
+                var message = JSON.parse(e.data)
+                console.log('sent at', new Date(message.time*1000));
+            };
+            sock.onclose = function() {
+               console.log('close, reconnect');
+               // newConnection();
+            };
+
+            sock.send('test');
+            sock.close();
+        }
+        newConnection();
+    </script>
+
+
 </body>
 </html>

@@ -1,22 +1,42 @@
-var q = 'gnq';
+'use strict';
 
-var open = require('amqplib').connect('amqp://guest:guest@localhost');
+var app = require('express')(),
+    conf = require( './config'),
+    http = require('http').Server(app),
+    redis = require('redis'),
+    Q = require('q'),
+    argv = require('optimist').argv;
 
-// Consumer
-open.then(function(conn) {
-  console.log('opened')
-  var ok = conn.createChannel();
-  console.log('ok', ok)
-  ok = ok.then(function(ch) {
-    console.log('ok ok ')
-    ch.assertQueue(q, {durable: false});
-    ch.consume(q, function(msg) {
-      console.log('consumed')
-      if (msg !== null) {
-        console.log(msg.content.toString());
-        ch.ack(msg);
-      }
+var pub = redis.createClient(),
+    sub = redis.createClient(),
+    rclient = redis.createClient();
+
+
+console.log("Connected to redis");
+
+var http = require('http');
+var sockjs = require('sockjs');
+
+sub.subscribe('broadcast');
+
+var echo = sockjs.createServer();
+
+echo.on('connection', function(conn) {
+    console.log('New client connected')
+
+    sub.on("message", function(channel, message) {
+        console.log('got message')
+        conn.write(message);
     });
-  });
-  return ok;
-}).then(null, console.warn);
+
+    conn.on('close', function() {
+        // cleanup
+    });
+
+});
+
+var server = http.createServer();
+echo.installHandlers(server, {prefix:'/echo'});
+server.listen(9999, '0.0.0.0');
+
+

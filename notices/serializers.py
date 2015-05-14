@@ -1,6 +1,10 @@
 from django.forms import widgets
 from rest_framework import serializers
 from models import Message
+import redis, json
+from django.conf import settings
+from datetime import datetime
+import calendar
 
 
 class MessageSerializer(serializers.Serializer):
@@ -10,11 +14,19 @@ class MessageSerializer(serializers.Serializer):
 
     def create(self, validated_data):
         """
-        Create and return a new `Snippet` instance, given the validated data.
+        Create message and publish.
         """
-        return {
-            "text": validated_data["text"],
-            "level": validated_data["level"]
-        }
-        return Message.objects.create(**validated_data)
 
+
+        d = datetime.utcnow()
+        unixtime = calendar.timegm(d.utctimetuple())
+
+        message = {
+            "text": validated_data["text"],
+            "level": validated_data["level"],
+            "time": unixtime
+        }
+        r = redis.Redis(connection_pool=settings.REDIS_POOL)
+        r.publish('broadcast', json.dumps(message))
+        return message
+        

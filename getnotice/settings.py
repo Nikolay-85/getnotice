@@ -1,13 +1,15 @@
 # Django settings for getnotice project.
-import os, sys
+import os, sys, redis
 
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-PROJECT_ROOT = os.path.realpath(
+DJANGO_PROJECT_ROOT = os.path.realpath(
     os.path.join(os.path.dirname(__file__)))
 
+PROJECT_ROOT = os.path.realpath(
+    os.path.join(os.path.dirname(os.path.dirname(__file__))))
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -65,7 +67,7 @@ MEDIA_URL = ''
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = '/home/vagrant/getnotice/static'
+STATIC_ROOT = os.path.join(PROJECT_ROOT, 'static')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
@@ -74,7 +76,8 @@ STATIC_URL = '/static/'
 # Additional locations of static files
 STATICFILES_DIRS = (
     # os.path.join(PROJECT_ROOT, 'static/'),
-    os.path.join(PROJECT_ROOT, 'static/libs/'),
+    os.path.join(DJANGO_PROJECT_ROOT, 'static/'),
+    os.path.join(PROJECT_ROOT, 'frontend/')
     )
 
 # List of finder classes that know how to find static files in
@@ -111,7 +114,7 @@ ROOT_URLCONF = 'getnotice.urls'
 # Python dotted path to the WSGI application used by Django's runserver.
 WSGI_APPLICATION = 'getnotice.wsgi.application'
 
-TEMPLATE_DIRS = (os.path.join(os.path.dirname(PROJECT_ROOT), 'templates/'))
+TEMPLATE_DIRS = (os.path.join(os.path.dirname(DJANGO_PROJECT_ROOT), 'templates/'))
 
 
 INSTALLED_APPS = (
@@ -125,6 +128,8 @@ INSTALLED_APPS = (
 
     'rest_framework',
     'south',
+    'templatetag_handlebars',
+
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -161,3 +166,6 @@ LOGGING = {
         },
     }
 }
+
+REDIS_POOL = redis.ConnectionPool(host='localhost', port=6379, db=0)
+USE_EMBER_STYLE_ATTRS = True

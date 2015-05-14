@@ -15,6 +15,12 @@
   "dependencies": {
     "amqp": "^0.2.4",
     "amqplib": "^0.3.2",
-    "bower": "^1.4.1"
+    "bower": "^1.4.1",
+    "ember": "^1.0.0-pre.2",
+    "express": "^4.12.3",
+    "optimist": "^0.6.1",
+    "q": "^1.4.0",
+    "redis": "^0.12.1",
+    "sockjs": "^0.3.15"
   }
 }

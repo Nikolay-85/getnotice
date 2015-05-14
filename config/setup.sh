@@ -31,7 +31,7 @@ apt-get install -y libjpeg-dev libtiff-dev zlib1g-dev libfreetype6-dev liblcms2-
 apt-get -y install nodejs
 apt-get -y install npm
 apt-get -y install libmysqlclient-dev
-apt-get -y install rabbitmq-server
+apt-get -y install redis-server
 
 echo -e "\n--- Install MySQL specific packages and settings ---\n"
 echo "mysql-server mysql-server/root_password password $DBPASSWD" | debconf-set-selections
@@ -68,6 +68,7 @@ chmod a+x $PROJECT_DIR/manage.py
 su - vagrant -c "source $VIRTUALENV_DIR/bin/activate && cd $PROJECT_DIR && ./manage.py syncdb --noinput && ./manage.py migrate"
 
 # Rabbitmq related
-rabbitmqctl add_vhost gn
-rabbitmqctl add_user gn gn
-rabbitmqctl set_permissions -p gn gn ".*" ".*" ".*"
+#apt-get -y install rabbitmq-server
+#rabbitmqctl add_vhost gn
+#rabbitmqctl add_user gn gn
+#rabbitmqctl set_permissions -p gn gn ".*" ".*" ".*"
