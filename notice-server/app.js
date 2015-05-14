@@ -25,7 +25,6 @@ echo.on('connection', function(conn) {
     console.log('New client connected')
 
     sub.on("message", function(channel, message) {
-        console.log('got message')
         conn.write(message);
     });
 

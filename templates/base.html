@@ -20,17 +20,16 @@
 
     {% block content %}{% endblock %}
     
-    {% tplhandlebars "tpl-infos" %}
-      {{total}} {% trans "result(s)." %}
-      <p>{% trans "Min" %}: {{min}}</p>
-      <p>{% trans "Max" %}: {{max}}</p>
-    {% endtplhandlebars %}
+    
 
-    <script src="{{ STATIC_URL }}/libs/sockjs/sockjs.min.js"></script>
-    <script src="{{ STATIC_URL }}/libs/jquery/dist/jquery.min.js"></script>
-    <script src="{{ STATIC_URL }}/libs/ember/ember.min.js"></script>
-    <script src="{{ STATIC_URL }}/libs/loader.js/loader.js"></script>
-    <script src="{{ STATIC_URL }}/app/app.js"></script>
+    <script src="{{ STATIC_URL }}libs/sockjs/sockjs.min.js"></script>
+    <script src="{{ STATIC_URL }}libs/jquery/dist/jquery.min.js"></script>
+    <script src="{{ STATIC_URL }}libs/ember/ember.min.js"></script>
+    <script src="{{ STATIC_URL }}libs/ember/ember-template-compiler.js"></script>
+    <script src="{{ STATIC_URL }}libs/ember-data/ember-data.js"></script>
+    <script src="{{ STATIC_URL }}libs/loader.js/loader.js"></script>
+    <script src="{{ STATIC_URL }}libs/handlebars/handlebars.js"></script>
+    <script src="{{ STATIC_URL }}app/app.js"></script>
     
     <script>
         var newConnection = function(){
@@ -40,10 +39,16 @@
                console.log('open');
             };
             sock.onmessage = function(e) {
-
-                console.log('message', e.data);
-                var message = JSON.parse(e.data)
+                var message
+                try {
+                    message = JSON.parse(e.data);
+                } catch (e) {
+                    console.log('invalid message')
+                    return false;
+                }
+                 
                 console.log('sent at', new Date(message.time*1000));
+                App.MessageController.addObject({'text': message.text, 'time': new Date(message.time*1000)})
             };
             sock.onclose = function() {
                console.log('close, reconnect');
@@ -56,6 +61,11 @@
         newConnection();
     </script>
 
+    {% tplhandlebars "tpl-infos" %}
+      {{#each App.MessageController tagName="ul"}}
+        <li>{{this.text}} - {{this.time}}</li>
+      {{/each}}
+    {% endtplhandlebars %}
 
 </body>
 </html>
