@@ -44,7 +44,7 @@
     {% tplhandlebars "messages" %}
       <div class="messages_area"> 
         {{#each message in model}}
-          <div class="alert-message warnign">
+          <div class="alert-message warning wsmsg" >
               <p>{{timeFormatted message.time}}: {{message.text}}</p>
           </div>
         {{/each}}

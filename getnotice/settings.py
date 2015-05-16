@@ -27,6 +27,11 @@ DATABASES = {
         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
     }
 }
+if 'test' in sys.argv:
+        DATABASES = {
+            'default': {'ENGINE': 'django.db.backends.sqlite3'}
+            }
+
 
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
@@ -147,6 +152,7 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
     'dashboard',
     'notices',
+    'fts',
 )
 
 # A sample logging configuration. The only tangible logging
@@ -167,16 +173,21 @@ LOGGING = {
             'level': 'ERROR',
             'filters': ['require_debug_false'],
             'class': 'django.utils.log.AdminEmailHandler'
-        }
+        },
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+            },
     },
     'loggers': {
         'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
+            'handlers': ['mail_admins', 'console'],
+            'level': 'DEBUG',
             'propagate': True,
         },
+
+    },
     }
-}
 
 REDIS_POOL = redis.ConnectionPool(host='localhost', port=6379, db=0)
 USE_EMBER_STYLE_ATTRS = True

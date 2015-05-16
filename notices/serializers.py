@@ -1,6 +1,5 @@
 from django.forms import widgets
 from rest_framework import serializers
-from models import Message
 import redis, json
 from django.conf import settings
 from datetime import datetime
@@ -16,8 +15,6 @@ class MessageSerializer(serializers.Serializer):
         """
         Create message and publish.
         """
-
-
         d = datetime.utcnow()
         unixtime = calendar.timegm(d.utctimetuple())
 
@@ -26,7 +23,8 @@ class MessageSerializer(serializers.Serializer):
             "level": validated_data["level"],
             "time": unixtime
         }
-        r = redis.Redis(connection_pool=settings.REDIS_POOL)
-        r.publish('broadcast', json.dumps(message))
+        if message["level"] != 'silent':
+            r = redis.Redis(connection_pool=settings.REDIS_POOL)
+            r.publish('broadcast', json.dumps(message))
         return message
         

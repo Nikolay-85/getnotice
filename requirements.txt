@@ -5,3 +5,6 @@ South
 celery
 redis
 django-templatetag-handlebars
+pytest
+selenium
+requests

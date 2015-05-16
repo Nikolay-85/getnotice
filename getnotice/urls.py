@@ -9,6 +9,6 @@ urlpatterns = staticfiles_urlpatterns()
 
 urlpatterns += patterns('',
     (r'^$', TemplateView.as_view(template_name="dashboard.html")),
-    url(r'^messages/$', views.MessageApi.as_view()),
+    url(r'^messages/$', views.MessageApi.as_view(), name='messages_api'),
 )
 
