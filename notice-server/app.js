@@ -19,9 +19,11 @@ var sockjs = require('sockjs');
 
 sub.subscribe('broadcast');
 
-var echo = sockjs.createServer();
+var bcServer = sockjs.createServer();
 
-echo.on('connection', function(conn) {
+console.log("Created broadcast SOCKJS server");
+
+bcServer.on('connection', function(conn) {
     console.log('New client connected')
 
     sub.on("message", function(channel, message) {
@@ -29,7 +31,7 @@ echo.on('connection', function(conn) {
     });
 
     conn.on('close', function() {
-        // cleanup
+        // related cleanup
     });
 
 });

@@ -27,7 +27,7 @@ case $key in
     shift
     ;;
     *)
-            # unknown option
+        # unknown option
     ;;
 esac
 shift

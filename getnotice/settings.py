@@ -109,6 +109,17 @@ MIDDLEWARE_CLASSES = (
     # 'dashboard.middleware.ProfileMiddleware',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.contrib.auth.context_processors.auth",
+    "django.core.context_processors.debug",
+    "django.core.context_processors.i18n",
+    "django.core.context_processors.media",
+    'django.core.context_processors.static',
+    'dashboard.context_processors.dashboard_media',
+    'django.core.context_processors.request',
+    )
+
+
 ROOT_URLCONF = 'getnotice.urls'
 
 # Python dotted path to the WSGI application used by Django's runserver.
@@ -169,3 +180,4 @@ LOGGING = {
 
 REDIS_POOL = redis.ConnectionPool(host='localhost', port=6379, db=0)
 USE_EMBER_STYLE_ATTRS = True
+MESSAGING_SERVER_URL = 'http://localhost:9999/echo'
