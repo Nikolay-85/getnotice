@@ -1,7 +1,7 @@
 'use strict';
 
 var app = require('express')(),
-    conf = require( './config'),
+    //conf = require( './config'),
     http = require('http').Server(app),
     redis = require('redis'),
     Q = require('q'),

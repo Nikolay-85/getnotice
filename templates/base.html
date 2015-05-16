@@ -9,7 +9,8 @@
   <meta name="description" content="The HTML5 dashboard">
   <meta name="author" content="Michael">
 
-  <link rel="stylesheet" href="{{ STATIC_URL }}css/styles.css?v=1.0">
+  <link rel="stylesheet" href="{{ STATIC_URL }}libs/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="{{ STATIC_URL }}css/app.css">
 
   <!--[if lt IE 9]>
   <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -26,46 +27,25 @@
     <script src="{{ STATIC_URL }}libs/jquery/dist/jquery.min.js"></script>
     <script src="{{ STATIC_URL }}libs/ember/ember.min.js"></script>
     <script src="{{ STATIC_URL }}libs/ember/ember-template-compiler.js"></script>
-    <script src="{{ STATIC_URL }}libs/ember-data/ember-data.js"></script>
-    <script src="{{ STATIC_URL }}libs/loader.js/loader.js"></script>
     <script src="{{ STATIC_URL }}libs/handlebars/handlebars.js"></script>
     <script src="{{ STATIC_URL }}app/app.js"></script>
     
     <script>
-        var newConnection = function(){
-            var sock = new SockJS('http://localhost:9999/echo');
-
-            sock.onopen = function() {
-               console.log('open');
-            };
-            sock.onmessage = function(e) {
-                var message
-                try {
-                    message = JSON.parse(e.data);
-                } catch (e) {
-                    console.log('invalid message')
-                    return false;
-                }
-                 
-                console.log('sent at', new Date(message.time*1000));
-                App.MessageController.addObject({'text': message.text, 'time': new Date(message.time*1000)})
-            };
-            sock.onclose = function() {
-               console.log('close, reconnect');
-               // newConnection();
-            };
-
-            sock.send('test');
-            sock.close();
-        }
-        newConnection();
+        
     </script>
-
-    {% tplhandlebars "tpl-infos" %}
-      {{#each App.MessageController tagName="ul"}}
-        <li>{{this.text}} - {{this.time}}</li>
-      {{/each}}
+    
+    {% tplhandlebars "messages" %}
+      <div class="messages_area"> 
+        {{#each message in model}}
+          <div class="alert-message info">
+              <p>{{message.text}}</p>
+          </div>
+         
+        {{/each}}
+      </div>
     {% endtplhandlebars %}
+    
+
 
 </body>
 </html>
