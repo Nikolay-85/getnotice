@@ -75,6 +75,15 @@ su - vagrant -c "source $VIRTUALENV_DIR/bin/activate && cd $PROJECT_DIR && ./man
 #rabbitmqctl add_user gn gn
 #rabbitmqctl set_permissions -p gn gn ".*" ".*" ".*"
 
+# Test environment (headless firefox etc)
+apt-get install -y Xvfb
+apt-get install -y libasound2
+apt-get install -y libdbus-glib-1-dev 
+echo "deb http://packages.linuxmint.com debian import" >> /etc/apt/sources.list
+apt-get update
+apt-get install -y --force-yes firefox
+  
+
 if [ $1 == "demo" ]; then
   echo "Setting up demo machine"
   apt-get install -y upstart
@@ -85,6 +94,7 @@ if [ $1 == "demo" ]; then
   cp /home/vagrant/getnotice/config/node-srv /etc/init.d/
   chmod +x /etc/init.d/node-srv 
   update-rc.d node-srv defaults
+  /etc/init.d/node-srv start
   
   # apache virtual
   cp /home/vagrant/getnotice/config/mserver.conf /etc/apache2/sites-available/

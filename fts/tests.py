@@ -1,7 +1,7 @@
 from django.test import LiveServerTestCase
 from selenium import webdriver
 import requests
-
+from pyvirtualdisplay import Display
 
 class MessageTest(LiveServerTestCase):
     """
@@ -14,6 +14,8 @@ class MessageTest(LiveServerTestCase):
         On start
 
         """
+        self.display = Display(visible=0, size=(1024, 768))
+        self.display.start()
         self.browser = webdriver.Firefox()
         self.browser.implicitly_wait(3)
 
@@ -23,6 +25,7 @@ class MessageTest(LiveServerTestCase):
 
         """
         self.browser.quit()
+        self.display.stop()
 
     def test_can_send_and_receive_broadcast_messages(self):
         """
@@ -37,7 +40,7 @@ class MessageTest(LiveServerTestCase):
         self.assertIn('Some dashboard text', body.text)
 
         # He can send message via API (with 3-rd party utility)
-        payload = {'text': 'checkit', 'level': 'gold'}
+        payload = {'text': 'checkit', 'level': 'info'}
         requests.post(self.live_server_url + '/messages/', data=payload)
         WebDriverWait(self.browser, 10).until(
             lambda driver: driver.find_element_by_css_selector('.wsmsg'))
@@ -56,10 +59,14 @@ class MessageTest(LiveServerTestCase):
         self.assertIn('Some dashboard text', body.text)
 
         # He cannot send message via API (with 3-rd party utility)
-        payload = {'text': 'c'*10000, 'level': 'gold'}
+        payload = {'text': 'c'*10000, 'level': 'info'}
         r = requests.post(self.live_server_url + '/messages/', data=payload)
         self.assertEqual(400, r.status_code)
 
-        payload = {'text': '', 'level': 'gold'}
+        payload = {'text': '', 'level': 'info'}
+        r = requests.post(self.live_server_url + '/messages/', data=payload)
+        self.assertEqual(400, r.status_code)
+
+        payload = {'text': 'test', 'level': 'somenewlevel'}
         r = requests.post(self.live_server_url + '/messages/', data=payload)
         self.assertEqual(400, r.status_code)

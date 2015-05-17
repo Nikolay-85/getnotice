@@ -3,13 +3,13 @@ App = Ember.Application.create();
 App.Message = Ember.Object.extend({});
 
 App.Router.map(function() {
-  this.resource('messages', { path: '/' });
+    this.resource('messages', { path: '/' });
 });
 
 App.ApplicationRoute = Ember.Route.extend({
-  model: function () {
-    return [];
-  },
+    model: function () {
+        return [];
+    },
 });
 
 App.MessagesController = Ember.ArrayController.extend({
@@ -37,7 +37,11 @@ App.MessagesController = Ember.ArrayController.extend({
                     return false;
                 }
                  
-                var adoptedMesage = {'text': message.text, 'time': new Date(message.time*1000)};
+                var adoptedMesage = {
+                    'text': message.text, 
+                    'time': new Date(message.time*1000),
+                    'level': message.level
+                };
                 _this.get('content').unshiftObject(App.Message.create(adoptedMesage));
                 
             };
