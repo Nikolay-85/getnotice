@@ -29,7 +29,7 @@ cd getnotice
 ![Selection_033.png](https://bitbucket.org/repo/jr74qK/images/3206648382-Selection_033.png)
 
 #### 2. Developer mode ####
-In developer mode you will get developer envirement.
+In developer mode you will get developer environment.
 
 * Install vagrant
 * `git clone git@bitbucket.org:michae1/getnotice.git`
