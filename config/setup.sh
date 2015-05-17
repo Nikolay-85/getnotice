@@ -48,13 +48,13 @@ if [[ ! -f /usr/local/bin/virtualenv ]]; then
 fi
 
 # JS related
-# TODO npm install, bower install
 # bower compatibility
 ln -s /usr/bin/nodejs /usr/bin/node
 cd $PROJECT_DIR
 npm install -g bower
-su - vagrant -c "npm install"
-su - vagrant -c "bower install --config.interactive=false"
+# Project libs front/back
+su - vagrant -c "cd $PROJECT_DIR && npm install"
+su - vagrant -c "cd $PROJECT_DIR && bower install --config.interactive=false"
 
 # virtualenv setup for project
 su - vagrant -c "/usr/local/bin/virtualenv $VIRTUALENV_DIR && \
