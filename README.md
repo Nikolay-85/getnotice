@@ -1,6 +1,8 @@
 # README #
 
-Simple notification service.
+Simple notification service. 
+
+Command line utility sends messages using REST. Django side (API) receives this messages and publishes it via redis. Node.js based server subscribes to this channel and serves clients connections. It pushes this messages to clients.
 
 ### Requirements ###
 
@@ -9,6 +11,7 @@ Simple notification service.
 ### Set up ###
 #### 1. Demo mode ####
 In demo mode you will get server ready to use.
+
 * Install vagrant
 * `git clone git@bitbucket.org:michae1/getnotice.git`
 * In project folder `S_MODE='demo' vagrant up`.
@@ -22,8 +25,12 @@ cd getnotice
 ./post-message.sh -m 'Hello World' -p 80 -l "warning"
 
 ```
+* You should get something like this:
+![Selection_033.png](https://bitbucket.org/repo/jr74qK/images/3206648382-Selection_033.png)
+
 #### 2. Developer mode ####
 In developer mode you will get developer envirement.
+
 * Install vagrant
 * `git clone git@bitbucket.org:michae1/getnotice.git`
 * In project folder `vagrant up`.
@@ -66,4 +73,4 @@ cd getnotice
 * Frontend part can be more usefull (auto destroy message after N minutes, auto count time on messages, some css based animations of messages)
 * Messages can be accumulated (e.g. in redis zset) to allow any user get full list on page load.
 * API can return number of receivers
-* Node.js based server can be more complex. For now I have no idea how except config file.
+* Node.js based server can be more complex. For now I have no idea which feature i can add except configuration file support.
