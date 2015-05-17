@@ -70,8 +70,8 @@ cd getnotice
 ### Possible Improvements? ###
 * In case node instances cannot be in one area redis pub/sub can be replaced by some distributed pub/sub or MQ
 * Vagrant provisioning scripts can be replaced by Chief/Ansible to make it easier to deploy multiple nodes.
-* Frontend part can be more usefull (auto destroy message after N minutes, auto count time on messages, some css based animations of messages)
-* Messages can be accumulated (e.g. in redis zset) to allow any user get full list on page load.
+* Frontend part can be more usefull (auto destroy message after N minutes, auto count time on messages, some css based animations of messages). Anyway I need to understand ember.js concepts deeply.
+* Messages can be accumulated (e.g. in redis zset) to allow any user get recent list on page load.
 * API can return number of receivers
 * Node.js based server can be more complex. For now I have no idea which feature i can add except configuration file support.
 * Django settings should be divided into dev/prod/qa (not necessary for now)
