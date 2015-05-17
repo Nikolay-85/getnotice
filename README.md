@@ -22,7 +22,7 @@ In demo mode you will get server ready to use.
 #!shell
 vagrant ssh
 cd getnotice 
-./post-message.sh -m 'Hello World' -p 80 -l "warning"
+./tools/post-message.sh -m 'Hello World' -p 80 -l "warning"
 
 ```
 * You should get something like this:
