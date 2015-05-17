@@ -73,4 +73,4 @@ cd getnotice
 * Frontend part can be more usefull (auto destroy message after N minutes, auto count time on messages, some css based animations of messages)
 * Messages can be accumulated (e.g. in redis zset) to allow any user get full list on page load.
 * API can return number of receivers
-* Node.js based server can be more complex. For now I have no idea how except config file.
+* Node.js based server can be more complex. For now I have no idea which feature i can add except configuration file support.
