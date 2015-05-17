@@ -9,6 +9,7 @@ Simple notification service.
 ### Set up ###
 #### 1. Demo mode ####
 In demo mode you will get server ready to use.
+
 * Install vagrant
 * `git clone git@bitbucket.org:michae1/getnotice.git`
 * In project folder `S_MODE='demo' vagrant up`.
@@ -24,6 +25,7 @@ cd getnotice
 ```
 #### 2. Developer mode ####
 In developer mode you will get developer envirement.
+
 * Install vagrant
 * `git clone git@bitbucket.org:michae1/getnotice.git`
 * In project folder `vagrant up`.
