@@ -1,6 +1,8 @@
 # README #
 
-Simple notification service.
+Simple notification service. 
+
+Command line utility sends messages using REST. Django side (API) receives this messages and publishes it via redis. Node.js based server subscribes to this channel and serves clients connections. It pushes this messages to clients.
 
 ### Requirements ###
 
