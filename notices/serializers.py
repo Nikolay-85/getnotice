@@ -9,7 +9,10 @@ LEVEL_CHOICES = (
         ('warning', 'warning'),
         ('success', 'success'),
         ('info', 'info'),
-        ('silent', 'silent')
+        ('silent', 'silent'),
+        ('danger', 'danger'),
+        ('error', 'danger'),
+        ('success', 'success'),
     )
 
 class MessageSerializer(serializers.Serializer):
