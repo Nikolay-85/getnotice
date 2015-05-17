@@ -25,6 +25,9 @@ cd getnotice
 ./post-message.sh -m 'Hello World' -p 80 -l "warning"
 
 ```
+* You should get something like this:
+![Selection_033.png](https://bitbucket.org/repo/jr74qK/images/3206648382-Selection_033.png)
+
 #### 2. Developer mode ####
 In developer mode you will get developer envirement.
 
