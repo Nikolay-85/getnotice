@@ -58,9 +58,13 @@ App.MessagesController = Ember.ArrayController.extend({
 });
 
 Ember.Handlebars.registerBoundHelper('timeFormatted', function(d) {
-  return [
-            d.getHours(),
-            d.getMinutes(),
-            d.getSeconds()
+    function checkTime(i) {
+        return (i < 10) ? "0" + i : i;
+    }
+
+    return [
+            checkTime(d.getHours()),
+            checkTime(d.getMinutes()),
+            checkTime(d.getSeconds())
         ].join(':');
 });
