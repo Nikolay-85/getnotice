@@ -53,8 +53,8 @@ fi
 ln -s /usr/bin/nodejs /usr/bin/node
 cd $PROJECT_DIR
 npm install -g bower
-npm install
-bower install --config.interactive=false
+su - vagrant -c "npm install"
+su - vagrant -c "bower install --config.interactive=false"
 
 # virtualenv setup for project
 su - vagrant -c "/usr/local/bin/virtualenv $VIRTUALENV_DIR && \
