@@ -3,6 +3,8 @@
 # Script to set up a Django project on Vagrant.
 
 # Installation settings
+echo "Setting up messaging server"
+echo $1
 
 PROJECT_NAME=getnotice
 
@@ -72,3 +74,28 @@ su - vagrant -c "source $VIRTUALENV_DIR/bin/activate && cd $PROJECT_DIR && ./man
 #rabbitmqctl add_vhost gn
 #rabbitmqctl add_user gn gn
 #rabbitmqctl set_permissions -p gn gn ".*" ".*" ".*"
+
+if [ $1 == "demo" ]; then
+  echo "Setting up demo machine"
+  apt-get install -y upstart
+  apt-get install -y apache2 apache2.2-common apache2-mpm-prefork apache2-utils libexpat1 ssl-cert
+  apt-get install -y libapache2-mod-wsgi
+  
+  # node service
+  cp /home/vagrant/getnotice/config/node-srv /etc/init.d/
+  chmod +x /etc/init.d/node-srv 
+  update-rc.d node-srv defaults
+  
+  # apache virtual
+  cp /home/vagrant/getnotice/config/mserver.conf /etc/apache2/sites-available/
+  ln -s /etc/apache2/sites-available/mserver.conf /etc/apache2/sites-enabled/
+  unlink /etc/apache2/sites-enabled/000-default.conf
+  /etc/init.d/apache2 reload
+
+  # static files
+  su - vagrant -c "source $VIRTUALENV_DIR/bin/activate && cd $PROJECT_DIR && ./manage.py collectstatic --noinput"
+
+
+  
+
+fi

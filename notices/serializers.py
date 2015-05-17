@@ -8,7 +8,7 @@ import calendar
 
 class MessageSerializer(serializers.Serializer):
     pk = serializers.IntegerField(read_only=True)
-    text = serializers.CharField(required=True, allow_blank=True, max_length=100)
+    text = serializers.CharField(required=True, allow_blank=False, max_length=100)
     level = serializers.CharField(required=False, allow_blank=True, max_length=100, default='candidate')
 
     def create(self, validated_data):

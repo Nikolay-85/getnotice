@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 var app = require('express')(),
     //conf = require( './config'),
@@ -23,21 +23,21 @@ var bcServer = sockjs.createServer();
 
 console.log("Created broadcast SOCKJS server");
 
-bcServer.on('connection', function(conn) {
-    console.log('New client connected')
+bcServer.on('connection', function (conn) {
+    console.log('New client connected');
 
-    sub.on("message", function(channel, message) {
+    sub.on("message", function (channel, message) {
         conn.write(message);
     });
 
-    conn.on('close', function() {
+    conn.on('close', function () {
         // related cleanup
     });
 
 });
 
 var server = http.createServer();
-bcServer.installHandlers(server, {prefix:'/echo'});
+bcServer.installHandlers(server, {prefix: '/echo'});
 server.listen(9999, '0.0.0.0');
 
 
