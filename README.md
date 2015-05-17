@@ -74,3 +74,5 @@ cd getnotice
 * Messages can be accumulated (e.g. in redis zset) to allow any user get full list on page load.
 * API can return number of receivers
 * Node.js based server can be more complex. For now I have no idea which feature i can add except configuration file support.
+* Django setting should be divided into dev/prod/qa (not necessary for now)
+* If moving to production some parts of this system should be separated to its own repository (because it would be deployed separately)
